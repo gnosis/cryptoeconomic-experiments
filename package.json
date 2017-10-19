@@ -1,0 +1,35 @@
+{
+  "name": "cryptoeconomics-experiments",
+  "version": "0.0.1",
+  "description": "GNOSIS Cryptoeconomic Experiments on Futarchy and Prediction Markets. Sponsored by an Ethereum Foundation's Dev Grant",
+  "devDependencies": {
+    "@gnosis.pm/gnosis-core-contracts": "^0.3.3",
+    "solc": "^0.4.15",
+    "@digix/tempo": "^0.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:gnosis/cryptoeconomic-experiments.git"
+  },
+  "keywords": [
+    "gnosis",
+    "cryptoeconomics",
+    "futarchy",
+    "prediction-markets",
+    "ethereum",
+    "solidity"
+  ],
+  "author": "Alexander Herrmann",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/gnosis/cryptoeconomic-experiments/issues"
+  },
+  "homepage": "https://github.com/gnosis/cryptoeconomic-experiments#readme",
+  "dependencies": {
+    "decimal": "0.0.2",
+    "decimal.js": "^7.3.0"
+  }
+}

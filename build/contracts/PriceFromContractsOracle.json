@@ -1,0 +1,173 @@
+{
+  "contract_name": "PriceFromContractsOracle",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "creator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "setOutcome",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "inputContractAddress2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "priceDifference",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "outcomeIsSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "blockNumber",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getOutcome",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_inputContractAddress1",
+          "type": "address"
+        },
+        {
+          "name": "_inputContractAddress2",
+          "type": "address"
+        }
+      ],
+      "name": "setInputAddress",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "inputAddressesSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "inputContractAddress1",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isOutcomeSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "difficulty",
+          "type": "int256"
+        }
+      ],
+      "name": "OutcomeAssignment",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x60606040526000600155341561001457600080fd5b604051602080610594833981016040528080519150505b43811161003757600080fd5b60008190556004805460a060020a60ff021916905560028054600160a060020a03191633600160a060020a03161790555b505b61051b806100796000396000f300606060405236156100935763ffffffff60e060020a60003504166302d05d3f81146100985780630537665d146100c75780630559faae146100dc5780633f7b36971461010b57806351c9971a1461013057806357e871e7146101575780637e7e4b471461017c578063972d582e146101a1578063ba167a25146101c8578063cb88c587146101ef578063ccdf68f31461021e575b600080fd5b34156100a357600080fd5b6100ab610245565b604051600160a060020a03909116815260200160405180910390f35b34156100d257600080fd5b6100da610254565b005b34156100e757600080fd5b6100ab6103c6565b604051600160a060020a03909116815260200160405180910390f35b341561011657600080fd5b61011e6103d5565b60405190815260200160405180910390f35b341561013b57600080fd5b6101436103db565b604051901515815260200160405180910390f35b341561016257600080fd5b61011e6103eb565b60405190815260200160405180910390f35b341561018757600080fd5b61011e6103f1565b60405190815260200160405180910390f35b34156101ac57600080fd5b6100da600160a060020a03600435811690602435166103f8565b005b34156101d357600080fd5b6101436104ae565b604051901515815260200160405180910390f35b34156101fa57600080fd5b6100ab6104cf565b604051600160a060020a03909116815260200160405180910390f35b341561022957600080fd5b6101436104de565b604051901515815260200160405180910390f35b600254600160a060020a031681565b6000806000544310158015610273575060045460a860020a900460ff16155b151561027e57600080fd5b600354600160a060020a031663f01e66ec6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b15156102c657600080fd5b6102c65a03f115156102d757600080fd5b5050506040518051600454909350600160a060020a0316905063f01e66ec6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561032c57600080fd5b6102c65a03f1151561033d57600080fd5b50505060405180519150508082111561035b57808203600155610366565b600019828203026001555b6004805475ff000000000000000000000000000000000000000000191660a860020a1790556001547fb1aaa9f4484acc283375c8e495a44766e4026170797dc9280b4ae2ab5632fb719060405190815260200160405180910390a15b5050565b600454600160a060020a031681565b60015481565b60045460a860020a900460ff1681565b60005481565b6001545b90565b60025433600160a060020a0390811691161461041357600080fd5b600160a060020a038216158015906104335750600160a060020a03811615155b151561043e57600080fd5b600354600160a060020a03161580156104605750600454600160a060020a0316155b151561046b57600080fd5b60038054600160a060020a0380851673ffffffffffffffffffffffffffffffffffffffff199283161790925560048054928416929091169190911790555b5b5050565b60045474010000000000000000000000000000000000000000900460ff1681565b600354600160a060020a031681565b60045460a860020a900460ff165b905600a165627a7a723058205332b70090aeb328de9ab8ba3430fabbbcc0d6fa05b8b6b1510c5ff56b78dc960029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1508423047827
+}
