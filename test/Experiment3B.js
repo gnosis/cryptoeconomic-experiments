@@ -48,12 +48,13 @@ contract('Experiemnt3B', function (accounts) {
 
         //Experiment Setup variables:
         currentDifficulty = 2838;
-	       //const currentDifficulty=web3.eth.getBlock('latest').difficulty;
+	      //currentDifficulty=web3.eth.getBlock('latest').difficulty;
+        console.log(currentDifficulty);
         lowerBoundaryDifficulty=parseInt(currentDifficulty*0.98);
         upperBoundaryDifficulty=parseInt(currentDifficulty*1.20);
 
         // Futarchy oracle stuff
-        fee = 500000 // 5%
+        fee = 50000 // 0.5%
         startDate=0;
 	      nrOfBlockTwoWeeks=4*60*24*14;
         nrOfBlockTwoWeeks=100;//just for easier testing
@@ -82,25 +83,27 @@ contract('Experiemnt3B', function (accounts) {
         lmsrMarketMaker = await LMSRMarketMaker.new();
         conditionalTokensforMarketAAddress = (await higherMarketPriceEvent.outcomeTokens(0));
         normalDifficultyEvent = await ScalarEvent.new(conditionalTokensforMarketAAddress,difficultyOracle.address,lowerBoundaryDifficulty,upperBoundaryDifficulty);
+
         normalDifficultyMarket = utils.getParamFromTxEvent(
         await standardMarketWithPriceLoggerFactory.createMarket(normalDifficultyEvent.address, lmsrMarketMaker.address, fee, startDate,{from:accounts[0]}),
           'market',StandardMarketWithPriceLogger
         );
 
-        await OutcomeToken.at(conditionalTokensforMarketAAddress).approve(normalDifficultyMarket.address,lsmrFunding,{from:accounts[0]});
         // calculation for how much do I need to fund the market initially, if I want to have lmsrFunding spend after the first marketmovement
-        //lsmrFunding = initialLmsrFunding+Math.floor(0.182322/Math.log(2)*initialLmsrFunding)
-        //initialLmsrFunding=lmsrFunding/(1+Math.floor(0.182322/Math.log(2)))
+        initialLmsrFunding=Math.floor(lsmrFunding*Math.log(2)/(Math.log(Math.exp(0.76214005204)+1 )))
 
-        initialLmsrFunding=lsmrFunding/(1+Math.floor(0.76214005204/Math.log(2)))
-
+        await OutcomeToken.at(conditionalTokensforMarketAAddress).approve(normalDifficultyMarket.address,initialLmsrFunding,{from:accounts[0]});
         await normalDifficultyMarket.fund(initialLmsrFunding);
         assert.equal(await normalDifficultyMarket.funding(),initialLmsrFunding);
+
+
         //1 / (1+exp(q/b))difficulty*0.22+difficulty*0.98=difficulty+difficulty*0.05
         //1 / (1+sum(exp(q/b))=0.07/0.22
         //b=lsmrFunding /ln(2)
         //q=0.76214 b
         await buyInFutrachyMarket(normalDifficultyMarket, lmsrMarketMaker,0,Math.floor(0.76214005204/Math.log(2)*initialLmsrFunding), 0, etherToken, higherMarketPriceEvent, 0,accounts) ;
+        assert.isBelow(lsmrFunding-parseInt(await OutcomeToken.at(await normalDifficultyEvent.collateralToken()).balanceOf(normalDifficultyEvent.address)),100);
+
         a=parseInt(await lmsrMarketMaker.calcMarginalPrice(normalDifficultyMarket.address, 0));
         b=parseInt(await lmsrMarketMaker.calcMarginalPrice(normalDifficultyMarket.address, 1));
         assert.equal(parseInt((parseInt((b/(a+b))*(upperBoundaryDifficulty-lowerBoundaryDifficulty))+parseInt(lowerBoundaryDifficulty))),parseInt(currentDifficulty*1.05));
@@ -116,24 +119,28 @@ contract('Experiemnt3B', function (accounts) {
         await standardMarketWithPriceLoggerFactory.createMarket(difficultyPlusFivePercentEvent.address, lmsrMarketMaker.address, fee, startDate,{from:accounts[0]}),
         'market',StandardMarketWithPriceLogger
          );
-        await OutcomeToken.at(conditionalTokensforMarketBAddress).approve(difficultyPlusFivePercentMarket.address,lsmrFunding);
         // calculation for how much do I need to fund the market inditially, if I want to have lmsrFunding spend after the marketmovement
-        //lsmrFunding = initialLmsrFunding+Math.floor(0.182322/Math.log(2)*initialLmsrFunding)
-        //initialLmsrFunding=lmsrFunding/(1+Math.floor(0.182322/Math.log(2)))
+        //lsmrFunding = b * log(sum(exp(Math.floor(0.182322/Math.log(2)*initialLmsrFunding)/b),exp(0)/b) ) || intitalfunding = bln(2)
+        initialLmsrFunding=Math.floor(lsmrFunding*Math.log(2)/(Math.log(Math.exp(0.182322)+1 )))
 
-        initialLmsrFunding=lsmrFunding/(1+Math.floor(0.182322/Math.log(2)))
+       await OutcomeToken.at(conditionalTokensforMarketBAddress).approve(difficultyPlusFivePercentMarket.address,initialLmsrFunding);
         await difficultyPlusFivePercentMarket.fund(initialLmsrFunding);
+
         assert.equal(await difficultyPlusFivePercentMarket.funding(),initialLmsrFunding);
         //1 / (1+exp(q/b))difficulty*0.22+difficulty*0.98=difficulty+difficulty*0.05
         //1 / (1+sum(exp(q/b))=0.07/0.22
         //b=initialLmsrFunding /ln(2)
         //q=0.182322 b
         await buyInFutrachyMarket(difficultyPlusFivePercentMarket, lmsrMarketMaker,1,Math.floor(0.182322/Math.log(2)*initialLmsrFunding), 0, etherToken, higherMarketPriceEvent, 1,accounts) ;
+        assert.isBelow(lsmrFunding-parseInt(await OutcomeToken.at(await difficultyPlusFivePercentEvent.collateralToken()).balanceOf(difficultyPlusFivePercentEvent.address)),100);
+
+
         a=parseInt(await lmsrMarketMaker.calcMarginalPrice(difficultyPlusFivePercentMarket.address, 0));
         b=parseInt(await lmsrMarketMaker.calcMarginalPrice(difficultyPlusFivePercentMarket.address, 1));
         assert.equal(parseInt(b*(upperBoundaryDifficulty-lowerBoundaryDifficulty)/(a+b))+parseInt(currentDifficulty*0.98),parseInt(currentDifficulty*1.1));
         console.log("starting Difficulty is :"+currentDifficulty+" and the price of normal market is at "+(parseInt((b/(a+b))*(upperBoundaryDifficulty-lowerBoundaryDifficulty))+parseInt(currentDifficulty*0.98))+"where as it should be around"+currentDifficulty*1.1);
         console.log("Second market created");
+
 
 
         //Completion of first Categorical Event Oracle
@@ -144,7 +151,7 @@ contract('Experiemnt3B', function (accounts) {
         //Creation of market rewards.
         avgPriceOracle= await PriceFromContractsOracle.new(targetBlock);
         await avgPriceOracle.setInputAddress(normalDifficultyMarket.address,difficultyPlusFivePercentMarket.address);
-        FivePercentPriceBoundary=2**63*0.05;
+        FivePercentPriceBoundary=2**64*0.05;
         bribaryEvent=await ScalarEvent.new(etherToken.address,avgPriceOracle.address,-FivePercentPriceBoundary,FivePercentPriceBoundary);
 
         await etherToken.deposit({from: accounts[0],value: manipulatorReward});
@@ -195,24 +202,23 @@ contract('Experiemnt3B', function (accounts) {
         const short=0
         const long=1
 
-        //Buying RewardTokens by manipulator
-        await etherToken.deposit({value:parseInt(manipulatorReward/3),from:accounts[manipulator]});
-        await etherToken.approve(dutchAuction.address,parseInt(manipulatorReward/3),{from:accounts[manipulator]});
-        //console.log(await dutchAuction.getPrice.call(1));
-        await waitUntilBlock(18000+36000*3,1);
-        console.log(await dutchAuction.getPrice.call(1));
-        await dutchAuction.postBuyOrder(parseInt(manipulatorReward/3), 1,{from: accounts[manipulator]});
-        console.log("manipulator bought Reward tokens");
+          //Buying RewardTokens by manipulator
+          await etherToken.deposit({value:parseInt(manipulatorReward/3),from:accounts[manipulator]});
+          await etherToken.approve(dutchAuction.address,parseInt(manipulatorReward/3),{from:accounts[manipulator]});
+          //console.log(await dutchAuction.getPrice.call(1));
+          await waitUntilBlock(18000+36000*3,1);
+          await dutchAuction.postBuyOrder(parseInt(manipulatorReward/3), 1,{from: accounts[manipulator]});
+          console.log("manipulator bought Reward tokens");
         //Trades
         //
 
        // Sell in Market DifficultyPlusfivePercentOracle by manipulator=2
-       tokenCountManipulator1Short = 4*ETHER;
+       tokenCountManipulator1Short = 1*ETHER;
        await buyInFutrachyMarket(difficultyPlusFivePercentMarket, lmsrMarketMaker,short,tokenCountManipulator1Short , manipulator, etherToken, higherMarketPriceEvent, 1,accounts) ;
        assert.equal(await OutcomeToken.at(await difficultyPlusFivePercentEvent.outcomeTokens(0)).balanceOf(accounts[manipulator]),tokenCountManipulator1Short);
 
         // Buy in Market DifficultyMarket
-        tokenCountManipulator1Long = 4*ETHER;
+        tokenCountManipulator1Long = 10005*ETHER/10000;
         await buyInFutrachyMarket(normalDifficultyMarket, lmsrMarketMaker,long,tokenCountManipulator1Long, manipulator, etherToken, higherMarketPriceEvent, 0,accounts) ;
         assert.equal(await OutcomeToken.at(await normalDifficultyEvent.outcomeTokens(1)).balanceOf(accounts[manipulator]),tokenCountManipulator1Long);
         console.log("manipulator traded");
@@ -226,7 +232,7 @@ contract('Experiemnt3B', function (accounts) {
         assert.equal(await OutcomeToken.at(await difficultyPlusFivePercentEvent.outcomeTokens(1)).balanceOf(accounts[buyer]),tokenCountHonestBetter1Long);
 
         // Sell in Market DifficultyMarket
-        tokenCountHonestBetter1Short=1*ETHER;
+        tokenCountHonestBetter1Short=10*ETHER/10;
         await buyInFutrachyMarket(normalDifficultyMarket, lmsrMarketMaker,short,tokenCountHonestBetter1Short, buyer, etherToken, higherMarketPriceEvent, 0,accounts) ;
         assert.equal(await OutcomeToken.at(await normalDifficultyEvent.outcomeTokens(0)).balanceOf(accounts[buyer]),tokenCountHonestBetter1Short);
         console.log("honest trader traded");
@@ -273,59 +279,53 @@ contract('Experiemnt3B', function (accounts) {
         await normalDifficultyEvent.redeemWinnings({from:accounts[buyer]});
         await difficultyPlusFivePercentEvent.redeemWinnings({from:accounts[buyer]});
         await higherMarketPriceEvent.redeemWinnings({from:accounts[buyer]});
-        console.log(await etherToken.balanceOf(accounts[buyer]));
         console.log("honest better reveals its tokens balance");
 
         before=await Token.at(await higherMarketPriceEvent.outcomeTokens(0)).balanceOf(accounts[manipulator]);
         await normalDifficultyEvent.redeemWinnings({from:accounts[manipulator]});
         after=await Token.at(await higherMarketPriceEvent.outcomeTokens(0)).balanceOf(accounts[manipulator]);
         difference =(parseInt(before)+ parseInt(tokenCountManipulator1Long*(parseInt(currentDifficulty+randomNr)-lowerBoundaryDifficulty)/(upperBoundaryDifficulty-lowerBoundaryDifficulty))-after);
-        console.log("before"+ before+" assumed win"+ tokenCountManipulator1Long*((currentDifficulty+randomNr)-lowerBoundaryDifficulty)/(upperBoundaryDifficulty-lowerBoundaryDifficulty)+" real win is"+after +"this gives a difference of "+difference);
-        assert.equal(parseInt(difference/1000000000),0);//rounding errors should not be a concern.
+        assert.isBelow(parseInt(difference),1000000000);//rounding errors should not be a concern.
         totalInNormalDifficulty=after;
         before=await Token.at(await higherMarketPriceEvent.outcomeTokens(1)).balanceOf(accounts[manipulator]);
         await difficultyPlusFivePercentEvent.redeemWinnings({from:accounts[manipulator]});
         after=await Token.at(await higherMarketPriceEvent.outcomeTokens(1)).balanceOf(accounts[manipulator]);
         difference =(parseInt(before)+ parseInt(tokenCountManipulator1Short*(upperBoundaryDifficulty-parseInt((currentDifficulty+randomNr)*21/20))/(upperBoundaryDifficulty-lowerBoundaryDifficulty))-after);
-        console.log("before"+ before+" assumed win"+ tokenCountManipulator1Short*((currentDifficulty+randomNr)*1.05-upperBoundaryDifficulty)/(upperBoundaryDifficulty-lowerBoundaryDifficulty)+" real win is"+after +"this gives a difference of "+difference);
         assert.equal(parseInt(difference/1000000000),0);//rounding errors should not be a concern.
         totalInDifficultyPluaFive=after;
         before=await etherToken.balanceOf(accounts[manipulator]);
         await higherMarketPriceEvent.redeemWinnings({from:accounts[manipulator]});
         after=await etherToken.balanceOf(accounts[manipulator]);
         difference=parseInt(before)+parseInt(totalInNormalDifficulty)-after;
-        console.log("before"+ before+" assumed win"+ totalInNormalDifficulty+" real win is"+after +"this gives a difference of "+difference);
-        assert.equal(parseInt(difference),0);//rounding errors should not be a concern.
+        assert.equal(parseInt(difference),0);
         console.log("manipulator withdraw funds from betting");
 
         // Withdrawing manipulating Reward
         pAvgNormalDifficulty=await  normalDifficultyMarket.getAvgPrice.call();
-        console.log(pAvgNormalDifficulty);
         pAvgDifficultyPlusFivePercent=await difficultyPlusFivePercentMarket.getAvgPrice.call();
-        console.log("PriceDifference "+ (pAvgNormalDifficulty- pAvgDifficultyPlusFivePercent )/2**63)
         dutchAuction.claimBuyerFunds(1,{from: accounts[manipulator]});
         manipulatorTokenNr=parseInt(await bribeToken.balanceOf(accounts[manipulator]));
-        console.log("manipulator has "+manipulatorTokenNr+"while he should have"+manipulatorReward);
-        assert.equal(parseInt((manipulatorTokenNr+99)/100),manipulatorReward/100);
+        assert.isBelow(parseInt(manipulatorTokenNr)-manipulatorReward,100);
+
+
         before=await etherToken.balanceOf(accounts[manipulator]);
         await bribaryEvent.redeemWinnings({from:accounts[manipulator]});
         after=await etherToken.balanceOf(accounts[manipulator]);
-        d=((pAvgNormalDifficulty- pAvgDifficultyPlusFivePercent )/2**63+FivePercentPriceBoundary)*2*FivePercentPriceBoundary+FivePercentPriceBoundary;
-        if(d>FivePercentPriceBoundary)
+        d=1-((pAvgDifficultyPlusFivePercent-pAvgNormalDifficulty)+FivePercentPriceBoundary)/(2*FivePercentPriceBoundary);
+        if(d>1)
           d=manipulatorTokenNr;
-        else d*=manipulatorTokenNr;
-
+        if(d<0)
+            d=0;
+        if(0<d&& d<1) d=manipulatorTokenNr*d;
         difference=parseInt(before)+parseInt(d)-parseInt(after);
-        console.log("before: "+before+"   after: "+ after+"    with difference: "+(parseInt(after)-before));
-        assert.equal(difference,0);
+        assert.isBelow(difference,100000000);
 
         before=await etherToken.balanceOf(accounts[0]);
         await bribaryEvent.redeemWinnings();
         after=await etherToken.balanceOf(accounts[0]);
 
-        difference=parseInt(before)-parseInt(after);
-        console.log("before: "+before+"   after: "+ after+"    with difference: "+(parseInt(after)-before));
-        assert.equal(difference,0);
+        difference=parseInt(before)+parseInt(manipulatorTokenNr*(1-d))-parseInt(after);
+        assert.isBelow(difference,100000000);
 
   })
   it('should test futarchy oracle non-manipulated', async () => {
@@ -423,10 +423,11 @@ contract('Experiemnt3B', function (accounts) {
       before=await Token.at(await higherMarketPriceEvent.outcomeTokens(0)).balanceOf(accounts[buyer]);
       await normalDifficultyEvent.redeemWinnings({from:accounts[buyer]});
       after=await Token.at(await higherMarketPriceEvent.outcomeTokens(0)).balanceOf(accounts[buyer]);
-      //assert.equal(before+, after);
+
       await difficultyPlusFivePercentEvent.redeemWinnings({from:accounts[buyer]});
       await higherMarketPriceEvent.redeemWinnings({from:accounts[buyer]});
       console.log(await etherToken.balanceOf(accounts[buyer]));
+
       //assert.equal(await etherToken.balanceOf(accounts[buyer]),to be calculated )
       console.log("honest better reveals its tokens balance");
 
