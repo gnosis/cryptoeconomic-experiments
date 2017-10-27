@@ -1,0 +1,211 @@
+{
+  "contract_name": "PriceFromContractsOraclePlusRandomization",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "creator",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "inputContractAddress2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "outcome",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "encryptedRandomNr",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "outcomeIsSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "blockNumber",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getOutcome",
+      "outputs": [
+        {
+          "name": "",
+          "type": "int256"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_inputContractAddress1",
+          "type": "address"
+        },
+        {
+          "name": "_inputContractAddress2",
+          "type": "address"
+        }
+      ],
+      "name": "setInputAddress",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "inputAddressesSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "nrToBeRevealed",
+          "type": "uint256"
+        },
+        {
+          "name": "key",
+          "type": "bytes32"
+        }
+      ],
+      "name": "setOutcome",
+      "outputs": [],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "inputContractAddress1",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isOutcomeSet",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "_blockNumber",
+          "type": "uint256"
+        },
+        {
+          "name": "_encryptedRandomNr",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "outcome",
+          "type": "uint256"
+        }
+      ],
+      "name": "OutcomeAssignment",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "name": "nrFromBlock",
+          "type": "uint256"
+        }
+      ],
+      "name": "NRFROMBLOCK",
+      "type": "event"
+    }
+  ],
+  "unlinked_binary": "0x6060604052341561000f57600080fd5b60405160408061076d83398101604052808051919060200180519150505b43821161003957600080fd5b60008290556004805460a060020a60ff021916905560028054600160a060020a03191633600160a060020a031617905560058190555b50505b6106ec806100816000396000f3006060604052361561009e5763ffffffff60e060020a60003504166302d05d3f81146100a35780630559faae146100d257806327793f871461010157806338ad306a1461012657806351c9971a1461014b57806357e871e7146101725780637e7e4b4714610197578063972d582e146101bc578063ba167a25146101e3578063c59e88961461020a578063cb88c58714610225578063ccdf68f314610254575b600080fd5b34156100ae57600080fd5b6100b661027b565b604051600160a060020a03909116815260200160405180910390f35b34156100dd57600080fd5b6100b661028a565b604051600160a060020a03909116815260200160405180910390f35b341561010c57600080fd5b610114610299565b60405190815260200160405180910390f35b341561013157600080fd5b61011461029f565b60405190815260200160405180910390f35b341561015657600080fd5b61015e6102a5565b604051901515815260200160405180910390f35b341561017d57600080fd5b6101146102b5565b60405190815260200160405180910390f35b34156101a257600080fd5b6101146102bb565b60405190815260200160405180910390f35b34156101c757600080fd5b6101e1600160a060020a03600435811690602435166102c2565b005b34156101ee57600080fd5b61015e610378565b604051901515815260200160405180910390f35b341561021557600080fd5b6101e1600435602435610399565b005b341561023057600080fd5b6100b66106a0565b604051600160a060020a03909116815260200160405180910390f35b341561025f57600080fd5b61015e6106af565b604051901515815260200160405180910390f35b600254600160a060020a031681565b600454600160a060020a031681565b60015481565b60055481565b60045460a860020a900460ff1681565b60005481565b6001545b90565b60025433600160a060020a039081169116146102dd57600080fd5b600160a060020a038216158015906102fd5750600160a060020a03811615155b151561030857600080fd5b600354600160a060020a031615801561032a5750600454600160a060020a0316155b151561033557600080fd5b60038054600160a060020a0380851673ffffffffffffffffffffffffffffffffffffffff199283161790925560048054928416929091169190911790555b5b5050565b60045474010000000000000000000000000000000000000000900460ff1681565b60008060008060008060005443101580156103be575060045460a860020a900460ff16155b15156103c957600080fd5b6005548888604051918252602082015260409081019051908190039020146103f057600080fd5b6000544095506103e888870894507f9bf7833f20f216df06aa572bc69e0343ee41217033340a93710734aa0c27cb8c8660405190815260200160405180910390a1600354600160a060020a031663f01e66ec6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561047957600080fd5b6102c65a03f1151561048a57600080fd5b5050506040518051600454909550600160a060020a0316905063f01e66ec6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b15156104df57600080fd5b6102c65a03f115156104f057600080fd5b5050506040518051935050828411156105215760028484015b0483850360640281151561051957fe5b04915061053b565b60028484015b0484840360640281151561053757fe5b0491505b60026801000000000000000073__Math__________________________________63e46751e3856001190260006040516020015260405160e060020a63ffffffff8416028152600481019190915260240160206040518083038186803b15156105a357600080fd5b6102c65a03f415156105b457600080fd5b505050604051805190506103e8028115156105cb57fe5b048115156105d557fe5b04905060288213156105fd57828411156105f35760006001556105f8565b600180555b610638565b8284111561062157808511156105f35760006001556105f8565b600180555b610638565b808511156106325760018055610638565b60006001555b5b5b6004805475ff000000000000000000000000000000000000000000191660a860020a1790556001547f39972cb21edd888c2061a2b4b37874524bbc055cfeaa3054682ba5369f5029aa9060405190815260200160405180910390a15b5050505050505050565b600354600160a060020a031681565b60045460a860020a900460ff165b905600a165627a7a72305820a33f2217f3e64d95b7b14c11e287b5cc796aa9f52bbcf85a046eaf6916014ed10029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1509022421732
+}
