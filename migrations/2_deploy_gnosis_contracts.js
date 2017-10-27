@@ -8,9 +8,10 @@ let ScalarEvent=artifacts.require('ScalarEvent')
 let LMSRMarketMaker = artifacts.require('LMSRMarketMaker')
 let EventFactory = artifacts.require('@gnosis.pm/gnosis-core-contracts/contracts/Events/EventFactory')
 let EtherToken = artifacts.require('@gnosis.pm/gnosis-core-contracts/contracts/Tokens/EtherToken')
+let PriceFromContractsOraclePlusRandomization=artifacts.require('PriceFromContractsOraclePlusRandomization')
 module.exports = function (deployer) {
     deployer.deploy(Math)
-    deployer.link(Math, [  StandardMarketFactory,LMSRMarketMaker, ScalarEvent, CategoricalEvent])
+    deployer.link(Math, [PriceFromContractsOraclePlusRandomization, StandardMarketFactory,LMSRMarketMaker, ScalarEvent, CategoricalEvent])
 
     deployer.deploy(DifficultyOracleFactory);
 

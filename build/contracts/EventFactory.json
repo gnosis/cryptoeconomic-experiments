@@ -239,8 +239,158 @@
         }
       },
       "updated_at": 1507387576393
+    },
+    "1508854568747": {
+      "links": {},
+      "events": {
+        "0x9732758aee476f5125b50d29cc43e28422f12ec078ba9f5c712f9dbd52796f59": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "categoricalEvent",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "collateralToken",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "oracle",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "outcomeCount",
+              "type": "uint8"
+            }
+          ],
+          "name": "CategoricalEventCreation",
+          "type": "event"
+        },
+        "0xd613e63983a1538814e1b390fc232d0e20462cf7410924f6b6a5f29ea38e82ed": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "scalarEvent",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "collateralToken",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "oracle",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "lowerBound",
+              "type": "int256"
+            },
+            {
+              "indexed": false,
+              "name": "upperBound",
+              "type": "int256"
+            }
+          ],
+          "name": "ScalarEventCreation",
+          "type": "event"
+        }
+      },
+      "updated_at": 1508854603344
+    },
+    "1508935574577": {
+      "links": {},
+      "events": {
+        "0x9732758aee476f5125b50d29cc43e28422f12ec078ba9f5c712f9dbd52796f59": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "categoricalEvent",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "collateralToken",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "oracle",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "outcomeCount",
+              "type": "uint8"
+            }
+          ],
+          "name": "CategoricalEventCreation",
+          "type": "event"
+        },
+        "0xd613e63983a1538814e1b390fc232d0e20462cf7410924f6b6a5f29ea38e82ed": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "scalarEvent",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "collateralToken",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "oracle",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "lowerBound",
+              "type": "int256"
+            },
+            {
+              "indexed": false,
+              "name": "upperBound",
+              "type": "int256"
+            }
+          ],
+          "name": "ScalarEventCreation",
+          "type": "event"
+        }
+      },
+      "updated_at": 1509020549917
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1507387576393
+  "updated_at": 1509020549917
 }

@@ -102,8 +102,90 @@
       },
       "address": "0xc6043ead51272154727b84fc21dbe1e85d5c47c0",
       "updated_at": 1507387576391
+    },
+    "1508854568747": {
+      "events": {
+        "0xa88e14227921dd3cab0fe30e6e4e4f8d646d8968abd25634fe49781588a8cf94": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "market",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "eventContract",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "marketMaker",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "fee",
+              "type": "uint24"
+            }
+          ],
+          "name": "StandardMarketCreation",
+          "type": "event"
+        }
+      },
+      "links": {
+        "Math": "0x83bf96e6e7d09b79c97a5cd2b3c05d2c7afb55c0"
+      },
+      "address": "0xc0e5a69738c3f9d82cdb8ec1f00d307f5177aa8e",
+      "updated_at": 1508854603332
+    },
+    "1508935574577": {
+      "events": {
+        "0xa88e14227921dd3cab0fe30e6e4e4f8d646d8968abd25634fe49781588a8cf94": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "market",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "eventContract",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "marketMaker",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "fee",
+              "type": "uint24"
+            }
+          ],
+          "name": "StandardMarketCreation",
+          "type": "event"
+        }
+      },
+      "links": {
+        "Math": "0xe46c69316ca75278295e743acc35b1f87ffbf67f"
+      },
+      "address": "0x70b2767fcf29db84ccd13ed45f08df70e07061f0",
+      "updated_at": 1509020549912
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1507387576391
+  "updated_at": 1509020549912
 }

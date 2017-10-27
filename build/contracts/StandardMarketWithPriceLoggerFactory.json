@@ -115,8 +115,100 @@
         "Math": "0xc1d57052f28721d4a67238cfbcd197eb25812ea1"
       },
       "updated_at": 1507387576392
+    },
+    "1508854568747": {
+      "events": {
+        "0x969b1ad77db8ae8298dedcdf1f2945322eaf681e1d56fcebfd4c23de996dc484": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "market",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "eventContract",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "marketMaker",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "fee",
+              "type": "uint24"
+            },
+            {
+              "indexed": false,
+              "name": "startDate",
+              "type": "uint256"
+            }
+          ],
+          "name": "StandardMarketWithPriceLoggerCreation",
+          "type": "event"
+        }
+      },
+      "links": {
+        "Math": "0x83bf96e6e7d09b79c97a5cd2b3c05d2c7afb55c0"
+      },
+      "address": "0x8702066a720be0c3cc498ddf3903e16664ee4cfd",
+      "updated_at": 1508854603335
+    },
+    "1508935574577": {
+      "events": {
+        "0x969b1ad77db8ae8298dedcdf1f2945322eaf681e1d56fcebfd4c23de996dc484": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "market",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "eventContract",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "marketMaker",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "name": "fee",
+              "type": "uint24"
+            },
+            {
+              "indexed": false,
+              "name": "startDate",
+              "type": "uint256"
+            }
+          ],
+          "name": "StandardMarketWithPriceLoggerCreation",
+          "type": "event"
+        }
+      },
+      "links": {
+        "Math": "0xe46c69316ca75278295e743acc35b1f87ffbf67f"
+      },
+      "address": "0x92c7ffeaeb8a74a788528ef3cf28e66db9c6f948",
+      "updated_at": 1509020549912
     }
   },
   "schema_version": "0.0.5",
-  "updated_at": 1507387576392
+  "updated_at": 1509020549912
 }
